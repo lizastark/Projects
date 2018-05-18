@@ -26,12 +26,15 @@ char play[10] = { 0X7E, 0xFF, 0x06, 0X03, 00, 00, 0x01, 0xFE, 0xF7, 0XEF};
 void setup () {
   mySerial.begin (9600);
   delay(1000);
+
   for (int count = 0; count < 10; count++) {
     mySerial.write( play[count]);
   }
+  
 }
 
 void loop () {
+  
 }
 
 
