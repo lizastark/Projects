@@ -158,24 +158,39 @@
 # define End_Byte       0xEF
 # define Acknowledge    0x00        //Returns info with command 0x41 [0x01: info, 0x00: no info]
 
-SoftwareSerial mySerial(10, 11);
+SoftwareSerial mySerial(8, 9);
+// Set serial pins (RX, TX)
+// Changed to 8 ,9
 
 void setup () {
   Serial.begin(9600);
   mySerial.begin (9600);
   execute_CMD(0x3F, 0x00, 0x00);   // Send request for initialization parameters
-  while (mySerial.available() < 10) // Wait until initialization parameters are received (10 bytes)
-    delay(30);                       // Pretty long delays between succesive commands needed
+
+  /*
+    REMOVED THE WHILE LOOP - KEPT GETTING STUCK AND SEEMS TO WORK FINE WITHOUT IT
+    
+    //while (mySerial.available() < 5)  // Wait until initialization parameters are received (10 bytes)
+    //Serial.println(mySerial.available());
+    //delay(30);    // Pretty long delays between succesive commands needed
+    
+    END OF REMOVED WHILE LOOP
+  */
 
   // Set sound (0x06) to very low volume (0x05). Adept according used speaker and required volume
   execute_CMD(0x06, 0x00, 0x05);
+
+  Serial.println("Enter your command pls");
 }
 
 void loop () {
+
   if (Serial.available())
   {
+
     // Input Serial monitor: Command and the two parameters in DECIMAL numbers (NOT HEX)
     // E.g. 3,0,1 (or 3 0 1 or 3;0;1) will play first track on the TF-card
+    // Or 6 0 15 will set the volume to 15
     byte Command    = Serial.parseInt();
     byte Parameter1 = Serial.parseInt();
     byte Parameter2 = Serial.parseInt();
@@ -208,6 +223,7 @@ void loop () {
     Serial.print("), 0x"); if (Returned[6] < 16) Serial.print("0"); Serial.print(Returned[6], HEX);
     Serial.print("("); Serial.print(Returned[6], DEC); Serial.println(")");
   }
+
 }
 
 void execute_CMD(byte CMD, byte Par1, byte Par2)
@@ -215,6 +231,18 @@ void execute_CMD(byte CMD, byte Par1, byte Par2)
 {
   // Calculate the checksum (2 bytes)
   word checksum =  -(Version_Byte + Command_Length + CMD + Acknowledge + Par1 + Par2);
+
+  // Print out the values to write a sketch without the execute function
+  // After you enter the DEC values for the command into the serial monitor, you will receive a first
+  // set of values for checksum high and low. Use these values for the command you want to send.
+  // Once the commands are received, the player will send another message back with any return values
+  // and another set of checksum high and low vals. Don't use these.
+  Serial.print("Checksum High= ");
+  Serial.println(highByte(checksum), HEX);
+
+  Serial.print("Checksum Low= ");
+  Serial.println(lowByte(checksum), HEX);
+
   // Build the command line
   byte Command_line[10] = { Start_Byte, Version_Byte, Command_Length, CMD, Acknowledge,
                             Par1, Par2, highByte(checksum), lowByte(checksum), End_Byte
