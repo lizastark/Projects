@@ -60,8 +60,8 @@ int rightSensor = A2;           // R input pin
 int readingsLeft[numReadings];  // the readings from the left sensor
 int readingsRight[numReadings]; // the readings from the right sensor
 
-int thresholdLeft = 30;         // Left quilt patch opened
-int thresholdRight = 30;        // Right quilt patch opened
+int thresholdLeft = 270;         // Left quilt patch opened
+int thresholdRight = 270;        // Right quilt patch opened
 
 int readIndexLeft = 0;          // the index of the current reading on the left sensor
 int readIndexRight = 0;         // the index of the current reading on the right sensor
