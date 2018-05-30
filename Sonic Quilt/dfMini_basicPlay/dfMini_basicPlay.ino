@@ -40,14 +40,14 @@ void setup () {
   // Set volume to 30
   for (int count = 0; count < 10; count++) {
     mySerial.write(setVolume[count]);
-    // Serial.println("volume");
+    //Serial.println("volume");
   }
 
 
   // Play file once
   for (int count = 0; count < 10; count++) {
     mySerial.write( play[count]);
-    // Serial.println("command");
+    //Serial.println("command");
   }
 
 

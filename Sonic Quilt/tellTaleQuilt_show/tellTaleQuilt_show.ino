@@ -60,9 +60,47 @@ int rightSensor = A2;           // R input pin
 int readingsLeft[numReadings];  // the readings from the left sensor
 int readingsRight[numReadings]; // the readings from the right sensor
 
-//SENSOR THRESHOLD
+
+
+/* SENSOR THRESHOLD VARIABLES FOR EACH PATCH 
+*  Comment out for each speaker
+*/
+
+//Speaker 1
 int thresholdLeft = 200;         // Left quilt patch opened
 int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 2
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 3
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 4
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 6
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 7
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 8
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+//Speaker 9
+//int thresholdLeft = 200;         // Left quilt patch opened
+//int thresholdRight = 200;        // Right quilt patch opened
+
+/* END SENSOR VARIABLES */
+
+
 
 int readIndexLeft = 0;          // the index of the current reading on the left sensor
 int readIndexRight = 0;         // the index of the current reading on the right sensor

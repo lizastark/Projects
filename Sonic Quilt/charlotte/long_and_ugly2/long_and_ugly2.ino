@@ -32,9 +32,9 @@ const int numReadings = 10;
 
 int counter = 0;
    
-#define PAGE_1 8  // buildings (sound. Heat)
+#define PAGE_1 10  // buildings (sound. Heat)
 #define PAGE_2 9  // window (sound. no heat)
-#define PAGE_3 10  // Sea (sound. Heat)
+#define PAGE_3 8  // Sea (sound. Heat)
 #define PAGE_4 11 // tree input (silent page. no heat)
 #define PAGE_5 12 // train (sound. Heat)
 #define PAGE_6 13 // people (sound)
@@ -115,7 +115,7 @@ if (debouncer1.fell()
     analogWrite(houses, 0);
     analogWrite(sea,0);
     analogWrite(train,0);
-  for (int x = 0; x < 120; x++){analogWrite(houses, 255);
+  for (int x = 0; x < 60; x++){analogWrite(houses, 255);
   delay (200);
   analogWrite (houses, 0);
   delay(200);
@@ -136,7 +136,7 @@ if (debouncer3.fell()) {
    analogWrite(houses, 0);
    analogWrite(sea,0);
    analogWrite(train,0);
- for (int x = 0; x < 120; x++){analogWrite(sea, 255);
+ for (int x = 0; x < 60; x++){analogWrite(sea, 255);
   delay (200);
   analogWrite (sea, 0);
   delay(200);
@@ -149,20 +149,20 @@ if (debouncer4.fell()) {
   analogWrite(houses, 0);
   analogWrite(sea,0);
   analogWrite(train,0);
-  }
+    for (int x = 0; x < 60; x++){analogWrite(train, 255);
+  delay (200);
+  analogWrite (train, 0);
+  delay(200);
+ }
+  analogWrite (train, 0);}  
 
   if (debouncer5.fell()) {
   playFile4();
  Serial.println ("page 5 is on.");
     analogWrite(houses, 0);
     analogWrite(sea,0);
-    analogWrite(train,0);
-  for (int x = 0; x < 120; x++){analogWrite(train, 255);
-  delay (200);
-  analogWrite (train, 0);
-  delay(200);
- }
-  analogWrite (train, 0);}  
+    analogWrite(train,0);}
+
     
   if (debouncer6.fell()) {
   playFile5();
@@ -171,6 +171,7 @@ if (debouncer4.fell()) {
     analogWrite(sea,0);
     analogWrite(train,0);
    }
+   
     if (debouncer8.fell()) {
   Stopall();
  Serial.println ("page 8 is on.");
