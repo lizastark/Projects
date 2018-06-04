@@ -66,33 +66,14 @@ int readingsRight[numReadings]; // the readings from the right sensor
 *  Comment out for each speaker
 */
 
-//Speaker 1 - DONE - UPLOADED
-//int thresholdLeft = 300;         // Left quilt patch opened
-//int thresholdRight = 297;        // Right quilt patch opened
 
-//Speaker 2 - DONE
-//int thresholdLeft = 298;         // Left quilt patch opened
-//int thresholdRight = 270;        // Right quilt patch opened
+//Speaker 4 - done
+//int thresholdLeft = 0;         // Left quilt patch opened - MESSED UP
+//int thresholdRight = 339;        // Right quilt patch opened
 
-//Speaker 3 - DONE
-//int thresholdLeft = 273;         // Left quilt patch opened
-//int thresholdRight = 276;        // Right quilt patch opened
-
-//Speaker 4 - SEE OTHER SKETCH
-
-//Speaker 6 - DONE
-int thresholdLeft = 304;         // Left quilt patch opened
-int thresholdRight = 285;        // Right quilt patch opened
-
-//Speaker 7 - DONE
-//int thresholdLeft = 257;         // Left quilt patch opened
-//int thresholdRight = 271;        // Right quilt patch opened
-
-//Speaker 8 - DONE
-//int thresholdLeft = 283;         // Left quilt patch opened
-//int thresholdRight = 269;        // Right quilt patch opened
-
-//Speaker 9 - SEE OTHER SKETCH
+//Speaker 9 - DONE
+int thresholdLeft = 0;         // Left quilt patch opened - MESSED UP
+int thresholdRight = 283;        // Right quilt patch opened
 
 /* END SENSOR VARIABLES */
 
@@ -142,6 +123,7 @@ void loop () {
   averageRight = readRightSensor();
 
   // send it to the computer as ASCII digits
+  /*
   Serial.print("Left sensor = ");
   Serial.print(averageLeft);
   Serial.print("\t");
@@ -149,24 +131,25 @@ void loop () {
   Serial.print(averageRight);
   Serial.print("\t");
   delay(1);        // delay in between reads for stability
+  */
 
-  //If either sensor is opened (i.e. above threshold)
-  if ((averageLeft >= thresholdLeft) || (averageRight >= thresholdRight)) {
-    //check that both previous values were below threshold:
-    if ((lastSensorStateLeft < thresholdLeft) && (lastSensorStateRight < thresholdRight)) {
+  //If left sensor is opened (i.e. above threshold)
+  if (averageLeft >= thresholdLeft) {
+    //check that left sensor previous values were below threshold:
+    if (lastSensorStateLeft < thresholdLeft) {
       //at least one sensor is opened and crossed the threshold
       //play the file
       playAudioFile();
-      Serial.print("Patch OPEN");
+    //  Serial.print("Patch OPEN");
     }
-    //if both sensors are closed
-  } else if ((averageLeft <= thresholdLeft) && (averageRight <= thresholdRight)) {
+    //if left sensor is closed
+  } else if (averageLeft <= thresholdLeft) {
     //stop playing file
     stopAudioFile();
-    Serial.print("Patch CLOSED");
+  //  Serial.print("Patch CLOSED");
   }
 
-  Serial.println();
+ // Serial.println();
 
   //save states for next comparison
   lastSensorStateLeft = averageLeft;
