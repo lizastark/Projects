@@ -76,7 +76,7 @@
                                                e.g. 0001-Joe Jackson.mp3...0348-Lets dance.mp3)
   0x04   4 Increase volume                     * [DH]=X, [DL]=X Increase volume by 1
   0x05   5 Decrease volume                     * [DH]=X, [DL]=X Decrease volume by 1
-  0x06   6 Specify volume                      * [DH]=X, [DL]= Volume (0-0x30) Default=0x30
+  0x06   6 Specify volume                      * [DH]=X, [DL]= Volume (0-0ux30) Default=0x30
   0x07   7 Specify Equalizer                   * [DH]=X, [DL]= EQ(0/1/2/3/4/5) [Normal/Pop/Rock/Jazz/Classic/Base]
   0x08   8 Specify repeat(NUM)                 * [DH]=highByte(NUM), [DL]=lowByte(NUM).Repeat the specified track number
   0x09   9 Specify playback source (Datasheet) ? [DH]=X, [DL]= (0/1/2/3/4)Unknown. Seems to be overrided by automatic detection
