@@ -2,6 +2,8 @@
 
   Knit Potentiometer
   October 2018
+  http://thesoftcircuiteer.net/soft-sensors/
+  Liza Stark 
 
   This sketch reads the data coming in from the
   sensor, maps it to a usable range, and writes
