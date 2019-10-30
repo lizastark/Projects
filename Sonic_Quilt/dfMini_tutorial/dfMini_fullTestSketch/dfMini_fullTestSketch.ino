@@ -1,8 +1,56 @@
 /*
   DF Player mini command discovery
+  This software is free to use and free to share
+
+  Additional info can be found on DFRobot site, but is not very reliable
+  Additional info:http://www.dfrobot.com/index.php?route=product/product&product_id=1121
+
+  By Ype Brada 2015-04-06
+
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  LIZA NOTES
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  *** This should be used to test different commands for the DFPlayer Mini.
+  *** I have found the available libraries to be woefully inadequate and that it is much
+      easier to use ten byte commands to perform tasks with this component.
+  *** Unfortunately, the original posting where Ype Brada posted this sketch and tutorial
+      has been removed.
+  *** Follow the instructions below (after Liza Notes) to discover different commands
+  *** Once you send a command, the program will print out the checksum high and low so you
+      can use the command in an array in another program
+
+  (1) Data Sheet
+  ===========================
+  There is a LOT of information here about specific commands, specifically related to file
+  structures and naming which are important!
+  https://drive.google.com/file/d/1FWj6h1n_1OTdEhtpa7ombmwNBnde4SYm/view
+
+  (2) Playing a file
+  ===========================
+  - Specify folder and file to playback (15 / 0x0F) is the most efficient way to play a file
+        - Command = 15
+        - Command Feedback = X
+        - Parameter 1 (DH) = Folder # (two digits)
+        - Parameter 2 (DL) = File # (three digits)
+  - Name all files using three digits: 001, 002, 003, etc
+  - Put them inside a folder(s) named with two digits: 01, 02, 03, etc
+  - Run this program and type in the command, parameter 1, and parameter 2.
+  - For example, to play the 5th song inside the first folder, you would type in:
+        15,01,005
+
+  (3) Getting the CheckSums
+  ===========================
+  - Open the serial monitor and enter the command
+  - Once it has received the command, the serial monitor will output the hex values for
+    checksum high and checksum low
+  - You can now input these in the 7th and 8th positions (counting from 0 at the beginning)
+    in the byte array to use in another program
+
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  BACK TO ORIGINAL NOTES
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Program is mend to discover all the possibilities of the command
+  Program is meant to discover all the possibilities of the command
   structure of the DFPlayer mini. No special libraries are needed.
 
   In general, there are 3 ways to address a MP3 or WAV file:
@@ -141,12 +189,6 @@
                                                Returns number of files in folder "01"
   0x4F  79 The total number of folders         * [DH]=0, [DL]=(NUM), Total number of folders, including root directory
 
-  This software is free to use and free to share
-
-  Additional info can be found on DFRobot site, but is not very reliable
-  Additional info:http://www.dfrobot.com/index.php?route=product/product&product_id=1121
-
-  Ype Brada 2015-04-06
 */
 
 
@@ -158,9 +200,8 @@
 # define End_Byte       0xEF
 # define Acknowledge    0x00        //Returns info with command 0x41 [0x01: info, 0x00: no info]
 
-SoftwareSerial mySerial(8, 9);
+SoftwareSerial mySerial(11, 12);
 // Set serial pins (RX, TX)
-// Changed to 8 ,9
 
 void setup () {
   Serial.begin(9600);
@@ -169,11 +210,11 @@ void setup () {
 
   /*
     REMOVED THE WHILE LOOP - KEPT GETTING STUCK AND SEEMS TO WORK FINE WITHOUT IT
-    
+
     //while (mySerial.available() < 5)  // Wait until initialization parameters are received (10 bytes)
     //Serial.println(mySerial.available());
     //delay(30);    // Pretty long delays between succesive commands needed
-    
+
     END OF REMOVED WHILE LOOP
   */
 
@@ -237,10 +278,10 @@ void execute_CMD(byte CMD, byte Par1, byte Par2)
   // set of values for checksum high and low. Use these values for the command you want to send.
   // Once the commands are received, the player will send another message back with any return values
   // and another set of checksum high and low vals. Don't use these.
-  Serial.print("Checksum High= ");
+  Serial.print("Checksum High = ");
   Serial.println(highByte(checksum), HEX);
 
-  Serial.print("Checksum Low= ");
+  Serial.print("Checksum Low = ");
   Serial.println(lowByte(checksum), HEX);
 
   // Build the command line

@@ -23,6 +23,7 @@ int readIndex = 0;              // the index of the current reading on the senso
 int total = 0;                  // the running total for the sensor
 int average = 0;                // the average for the sensor
 int sensor = A1;                // sensor pin
+int ledpin = 11;
 
 // Calibration variables
 int sensorValue = 0;
@@ -31,6 +32,7 @@ int sensorMax = 0;              //this is supposed to be lower
 
 void setup() {
 
+  pinMode(ledpin, OUTPUT);
   // initialize serial communication with computer:
   Serial.begin(9600);
 
@@ -121,7 +123,11 @@ void loop() {
   Serial.print("New Average = ");
   Serial.println(average);
 
+  analogWrite(ledpin, average);
+
   delay(1);        // delay in between reads for stability
+
+
 
 }
 
